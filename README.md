@@ -1,5 +1,5 @@
 # What is this?
-This is a plugin (tool) for the [Cheshire Cat Project](https://github.com/pieroit/cheshire-cat), allowing the Cat to retireve real time transit data from a GTFS feed.
+This is a plugin (tool) for the [Cheshire Cat Project](https://github.com/pieroit/cheshire-cat), allowing the Cat to retrieve real time transit data from a GTFS feed.
 
 # Install
 Download the **gtfs** folder into the **plugin** one.
