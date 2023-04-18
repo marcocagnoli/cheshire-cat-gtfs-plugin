@@ -18,4 +18,8 @@ Ask the cat something like "*I'm at bus stop 74637, can you tell me next buses a
 - 72962
 
 # Output
-
+The cat will answer with a list of buses qrriving to the bus stop. For each bus, he will give you the following information:
+- Route name
+- Company managing the service
+- Direction
+- Estimated (when real time data available) arriving date and time. If no real time data available, scheduled information are provided.
