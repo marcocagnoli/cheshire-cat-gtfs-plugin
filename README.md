@@ -23,3 +23,4 @@ The cat will answer with a list of buses qrriving to the bus stop. For each bus,
 - Company managing the service
 - Direction
 - Estimated (when real time data available) arriving date and time. If no real time data available, scheduled information are provided.
+- Waiting time in minutes (estimated or scheduled).
