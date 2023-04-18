@@ -2,7 +2,7 @@
 This is a plugin (tool) for the [Cheshire Cat Project](https://github.com/pieroit/cheshire-cat), allowing the Cat to retrieve real time transit data from a GTFS feed. 
 
 # Install
-Download the **gtfs** folder into the **cheshire-cat/core/cat/plugin** one.
+Download the **gtfs** folder into the **cheshire-cat/core/cat/plugins** one.
 
 # Configuration
 To retrieve information, the plugin use the [Transit Land](https://www.transit.land/) API. Transit Land collects GTFS feeds worldwide, so you can configure the cat to give transit information - potentially - from every city in the world. Actually you can configure only one city at time. In order to use the plugin, you will need:
