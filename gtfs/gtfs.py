@@ -1,10 +1,8 @@
 from cat.mad_hatter.decorators import tool, hook
 import requests
 import json
-from prettytable import PrettyTable
 from datetime import datetime, timezone
 from dateutil import tz
-import pytz
 
 @tool(return_direct=True)
 def bus_stop_eta (stop_code: str, cat):
@@ -15,10 +13,14 @@ def bus_stop_eta (stop_code: str, cat):
     # get a free api key from https://www.transit.land/
     
     transitland_apikey = "<apikey>"
-    
+
     # in the same websie, find your feed onestopid. For example, for Rome, it is "f-sr-atac~romatpl~trenitalia"
     
     onestopid = "<onestopid>"
+    
+    # This is the GTFS timezone i.e. "Europe/Rome"
+    
+    gtfstimezone = "<timezone>"
     
     # ----- end  configuration ---------
     
@@ -28,9 +30,6 @@ def bus_stop_eta (stop_code: str, cat):
     response = requests.get(url, headers=headers)
     
     eta = response.json()
-    
-    from_zone = tz.gettz('UTC')
-    to_zone = tz.gettz('Europe/Rome')
 
     for stop in eta['stops']:
         
@@ -42,12 +41,12 @@ def bus_stop_eta (stop_code: str, cat):
         
         for departure in stop['departures']:
     
-            realtime = 'NO'
+            realtime = False
             
             if departure['arrival']['estimated'] is not None:
-                realtime = 'YES'
+                realtime = True
             
-            if realtime == "YES":
+            if realtime == True:
                 
                 if departure['trip']['route']['route_short_name'] not in routes:
                     routes.append(departure['trip']['route']['route_short_name'])
@@ -58,21 +57,24 @@ def bus_stop_eta (stop_code: str, cat):
                 answer += "Route: " + departure['trip']['route']['route_short_name'] + "\n"
                 answer += "Company: " + departure['trip']['route']['agency']['agency_name'] +"\n"
                 answer += "Destination: " + departure['trip']['trip_headsign'] + "\n"
-                
-                answer += "Arriving at: " + departure['arrival']['estimated'] + "\n"
 
-                answer += "Minutes: " + str(round(((datetime.strptime(departure['arrival']['estimated'], "%H:%M:%S") - datetime.strptime(convertUTCToRomeTime(datetime.now()).strftime("%H:%M:%S"), "%H:%M:%S")).total_seconds()) / 60)) + "\n\n"
+                minutes = round((datetime.strptime(departure['service_date'] + " " + departure['arrival']['estimated'], "%Y-%m-%d %H:%M:%S") - convertUTCToGTFSTime(datetime.utcnow(), gtfstimezone)).total_seconds() / 60)
+                
+                if minutes < 0:
+                    minutes = 0
+                        
+                answer += "Minutes: " + str(minutes) + "\n\n"
                 
         l = len(routes)
         
         for departure in stop['departures']:
-    
-            realtime = 'NO'
+
+            realtime = False
             
             if departure['arrival']['estimated'] is not None:
-                realtime = 'YES'
+                realtime = True
             
-            if realtime == "NO":
+            if realtime == False:
                 
                 if departure['trip']['route']['route_short_name'] not in routes:
                     routes.append(departure['trip']['route']['route_short_name'])
@@ -84,15 +86,20 @@ def bus_stop_eta (stop_code: str, cat):
                     answer += "Company: " + departure['trip']['route']['agency']['agency_name'] +"\n"
                     answer += "Destination: " + departure['trip']['trip_headsign'] + "\n"
                     
-                    answer += "Arriving at (SCHEDULED): " + departure['arrival']['scheduled'] + "\n"
-                    answer += "Minutes (SCHEDULED): " + str(round(((datetime.strptime(departure['arrival']['scheduled'], "%H:%M:%S") - datetime.strptime(convertUTCToRomeTime(datetime.now()).strftime("%H:%M:%S"), "%H:%M:%S")).total_seconds()) / 60)) + "\n\n"
+                    minutes = round((datetime.strptime(departure['service_date'] + " " + departure['arrival']['scheduled'], "%Y-%m-%d %H:%M:%S") - convertUTCToGTFSTime(datetime.utcnow(), gtfstimezone)).total_seconds() / 60)
+                    
+                    if minutes < 0:
+                        minutes = 0
+                        
+                    answer += "Minutes (SCHEDULED): " + str(minutes) + "\n\n"
 
     return (answer)
 
-def convertUTCToRomeTime(dateTime):
+def convertUTCToGTFSTime(utc, gtfstimezone):
 
-    RomeTimeZone = pytz.timezone('Europe/Rome')
-    
-    dateTime = dateTime.astimezone(RomeTimeZone)
-    
-    return dateTime
+    from_zone = tz.gettz('UTC')
+    to_zone = tz.gettz(gtfstimezone)
+
+    utc = utc.replace(tzinfo=from_zone)
+
+    return datetime.strptime(datetime.strftime(utc.astimezone(to_zone), "%Y-%m-%d %H:%M:%S"), "%Y-%m-%d %H:%M:%S")
