@@ -3,6 +3,7 @@ This is a plugin (tool) for the [Cheshire Cat Project](https://github.com/pieroi
 
 # Install
 Download the **gtfs** folder into the **cheshire-cat/core/cat/plugins** one.
+
 Add **python-dateutil==2.8.2** to **cheshire-cat/core/requirements.txt**
 
 # Configuration
