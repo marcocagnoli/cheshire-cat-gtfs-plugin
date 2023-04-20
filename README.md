@@ -1,3 +1,6 @@
+`WARNING: actually the cat will generate information based on everything he has in memory, so real time data could not be so "real time". An [issue](https://github.com/pieroit/cheshire-cat/issues/130) has already been opened.`
+
+
 # What is this?
 This is a plugin (tool) for the [Cheshire Cat Project](https://github.com/pieroit/cheshire-cat), allowing the Cat to retrieve real time transit data from a GTFS feed.  You can ask the cat waiting times for buses arriving to a specific bus stop.
 
