@@ -1,4 +1,4 @@
-`WARNING: actually the cat will generate information based on everything he has in memory, so real time data could not be so "real time". An [issue](https://github.com/pieroit/cheshire-cat/issues/130) has already been opened.`
+`WARNING: actually the cat will generate information based on everything he has in memory, so real time data could not be so "real time".` An [issue](https://github.com/pieroit/cheshire-cat/issues/130) has already been opened.
 
 
 # What is this?
