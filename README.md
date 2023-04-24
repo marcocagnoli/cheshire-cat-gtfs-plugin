@@ -18,7 +18,9 @@ To retrieve information, the plugin use the [Transit Land](https://www.transit.l
 - A **Onestop ID**, a unique ID for a GTFS feed (ideally, a feed should cover a city or a region). Use their search engine to find out the right Onestop ID for you. Please, note that several feeds will not contain real time data, in such a situation the cat will provide only scheduled timetables.
 - Set the appropriate GTFS feed timezone to obtain reliable information.
 
-Write these two values into the gtfs.py file.
+Write these two values into the gtfs-config.py file.
+
+Theorically, tha cat should be able to make appropriate questions to auto configure itself but at the momento this process doesn't work as expected.
 
 # Usage
 Ask the cat something like "*I'm at bus stop 74637, can you tell me next buses arrivals?*". For example, in Rome, following values are valid stop codes:
