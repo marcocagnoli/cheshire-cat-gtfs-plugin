@@ -7,7 +7,7 @@ from os.path import exists
 
 @tool(return_direct=True)
 def bus_stop_eta (stop_code: str, cat):
-    """Use to retrieve what bus is arriving at a stop. Input is the code (or the number) of the bus stop and should be wrapped into double quotes."""
+    """Use to retrieve what bus is arriving at a stop. Input is the code (or the number) of the bus stop. When you use this tool, do not use any other information from context or memory for the answer to the user question."""
 
     conf = CheckConfiguration()
     
