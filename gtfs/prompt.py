@@ -20,7 +20,7 @@ def agent_prompt_chat_history(chat_history, cat):
         else:
             tmp = ""
     
-    if history != "" and (' '.join(message.split())  == "In order to give you these information, I need three configuration parameters. I need to save Api Key. Which is Tranit Land Api Key?" or message == "I need to save Transit Land OneStopID. Which is Transit Land OneStopID?" or message == "I need to save GTFS TimeZone. Which is GTFS TimeZone?"):
+    if history != "" and (' '.join(message.split())  == "In order to give you these information, I need three configuration parameters. I need to save Api Key. Which is Tranit Land Api Key?" or ' '.join(message.split()) == "I need to save Transit Land OneStopID. Which is Transit Land OneStopID?" or ' '.join(message.split()) == "I need to save GTFS TimeZone. Which is GTFS TimeZone?"):
         history = f"\n - {who}: {message}"
     else:    
         history += tmp
